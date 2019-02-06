@@ -61,13 +61,21 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="post_edit", methods={"POST"})
+     * @Route("/edit/{id}", name="post_edit")
      */
-    public function update($id)
+    public function update($id, Request $request)
     {
+        $date = new \Datetime();
+
         $entityManager = $this->getDoctrine()->getManager();
         $post = $entityManager->getRepository(Post::class)->find($id);
 
+        $post->setTitle($request->get('title'));
+        $post->setShorttext($request->get('shorttext'));
+        $post->setText($request->get('text'));
+        $post->setAuthor($request->get('author'));
+        $post->setUrlimage($request->get('urlimage'));
+        $post->setUpdatedat($date);
         
         $entityManager->flush();
 
