@@ -25,7 +25,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}", name="post_show")
+     * @Route("/{id}/show", name="post_show")
      */
     public function show($id)
     {
@@ -61,7 +61,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="post_edit")
+     * @Route("/{id}/edit", name="post_edit")
      */
     public function update($id, Request $request)
     {
