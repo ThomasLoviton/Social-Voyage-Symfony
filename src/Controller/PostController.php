@@ -56,7 +56,7 @@ class PostController extends AbstractController
 
         $entityManager->persist($post);
         $entityManager->flush();
-
+        
         return $this->json($post);
     }
 
@@ -80,5 +80,18 @@ class PostController extends AbstractController
         $entityManager->flush();
 
         return $this->json($post);
+    }
+
+    /**
+     * @Route("/{id}/delete", name="post_delete")
+     */
+    public function delete($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $post = $entityManager->getRepository(Post::class)->find($id);
+        $entityManager->remove($post);
+        $entityManager->flush();
+
+        return null;
     }
 }
