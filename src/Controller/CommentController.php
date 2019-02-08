@@ -19,28 +19,25 @@ class CommentController extends AbstractController
      */
     public function list($idpost)
     {
-        // $post = $this->getDoctrine()->getRepository(Post::class)->find($idpost);
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['idpost' => $idpost]);
 
-        // ->getRepository(Comment::class)->findAll()
-        // Pour retourner en JSON -> composer require symfony/serializer-pack
         return $this->json($comments);
     }
 
     /**
-     * @Route("/{id}/show", name="Comment_show")
+     * @Route("/{id}/show", name="comment_show")
      */
     public function show($id)
     {
-        $Comment = $this->getDoctrine()->getRepository(Comment::class)->find($id);
+        $comment = $this->getDoctrine()->getRepository(Comment::class)->find($id);
 
-        return $this->json($Comment);
+        return $this->json($comment);
     }
 
     /**
-     * @Route("/new", name="Comment_create")
+     * @Route("/new", name="comment_create")
      */
-    public function create(Request $request)
+    public function create($idpost, Request $request)
     {
         $date = new \Datetime();
         // Configuration PHP -> changer date.timezone
@@ -48,51 +45,44 @@ class CommentController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        $Comment = new Comment();
-        $Comment->setTitle($request->get('title'));
-        $Comment->setShorttext($request->get('shorttext'));
-        $Comment->setText($request->get('text'));
-        $Comment->setAuthor($request->get('author'));
-        $Comment->setUrlimage($request->get('urlimage'));
-        $Comment->setCreatedat($date);
-        $Comment->setUpdatedat($date);
+        $comment = new Comment();
+        $comment->setIdpost($idpost);
+        $comment->setText($request->get('text'));
+        $comment->setAuthor($request->get('author'));
+        $comment->setPostedat($date);
 
-        $entityManager->persist($Comment);
+        $entityManager->persist($comment);
         $entityManager->flush();
         
-        return $this->json($Comment);
+        return $this->json($comment);
     }
 
     /**
-     * @Route("/{id}/edit", name="Comment_edit")
+     * @Route("/{id}/edit", name="comment_edit")
      */
     public function update($id, Request $request)
     {
         $date = new \Datetime();
 
         $entityManager = $this->getDoctrine()->getManager();
-        $Comment = $entityManager->getRepository(Comment::class)->find($id);
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
 
-        $Comment->setTitle($request->get('title'));
-        $Comment->setShorttext($request->get('shorttext'));
-        $Comment->setText($request->get('text'));
-        $Comment->setAuthor($request->get('author'));
-        $Comment->setUrlimage($request->get('urlimage'));
-        $Comment->setUpdatedat($date);
+        $comment->setText($request->get('text'));
+        $comment->setAuthor($request->get('author'));
         
         $entityManager->flush();
 
-        return $this->json($Comment);
+        return $this->json($comment);
     }
 
     /**
-     * @Route("/{id}/delete", name="Comment_delete")
+     * @Route("/{id}/delete", name="comment_delete")
      */
     public function delete($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $Comment = $entityManager->getRepository(Comment::class)->find($id);
-        $entityManager->remove($Comment);
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
+        $entityManager->remove($comment);
         $entityManager->flush();
         
         return $this->json('Id ' . $id . ' deleted');
