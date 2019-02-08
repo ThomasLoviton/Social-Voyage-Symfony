@@ -5,7 +5,6 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 use App\Entity\Post;
 
@@ -92,6 +91,7 @@ class PostController extends AbstractController
         $post = $entityManager->getRepository(Post::class)->find($id);
         $entityManager->remove($post);
         $entityManager->flush();
-        return Response::HTTP_OK;
+        
+        return $this->json('Id ' . $id . ' deleted');
     }
 }
