@@ -59,16 +59,23 @@ class Post
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdat", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="createdat", type="datetime", nullable=false)
      */
     private $createdat;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updatedat", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="updatedat", type="datetime", nullable=false)
      */
     private $updatedat;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="numberlike", type="integer", nullable=false)
+     */
+    private $numberlike;
 
     public function getId(): ?int
     {
@@ -155,6 +162,18 @@ class Post
     public function setUpdatedat(\DateTimeInterface $updatedat): self
     {
         $this->updatedat = $updatedat;
+
+        return $this;
+    }
+
+    public function getNumberlike(): ?int
+    {
+        return $this->numberlike;
+    }
+
+    public function setNumberlike(int $numberlike): self
+    {
+        $this->numberlike = $numberlike;
 
         return $this;
     }

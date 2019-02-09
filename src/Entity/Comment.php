@@ -45,9 +45,16 @@ class Comment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="postedat", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="postedat", type="datetime", nullable=false)
      */
     private $postedat;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="numberlike", type="integer", nullable=true)
+     */
+    private $numberlike = '0';
 
     public function getId(): ?int
     {
@@ -98,6 +105,18 @@ class Comment
     public function setPostedat(\DateTimeInterface $postedat): self
     {
         $this->postedat = $postedat;
+
+        return $this;
+    }
+
+    public function getNumberlike(): ?int
+    {
+        return $this->numberlike;
+    }
+
+    public function setNumberlike(?int $numberlike): self
+    {
+        $this->numberlike = $numberlike;
 
         return $this;
     }
