@@ -19,6 +19,7 @@ class PostController extends AbstractController
     public function list()
     {
         $posts = $this->getDoctrine()->getRepository(Post::class)->findAll();
+        // findBy(['createdat' => 'DESC'])
 
         // Pour retourner en JSON -> composer require symfony/serializer-pack
         return $this->json($posts);
